@@ -49,7 +49,6 @@ export const createWSSGlobalInstance = () => {
 		ws.on('message', (data, isBinary) => {
 			wss.clients.forEach((client) => {
 				if (client.readyState !== 1) return;
-				console.log(JSON.parse(data));
 				client.send(data, { binary: isBinary });
 			});
 		});

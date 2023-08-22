@@ -7,6 +7,8 @@
 		log = [...log, str];
 	};
 
+	let progress = 0;
+
 	const establishWebSocket = () => {
 		if (webSocketEstablished) return;
 		const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
@@ -21,8 +23,13 @@
 			logEvent('[websocket] connection closed');
 		});
 		ws.addEventListener('message', (event) => {
-			console.log('[websocket] message received', event);
+			console.log('[websocket] message received', event.data);
 			logEvent(`[websocket] message received: ${event.data}`);
+
+			const data = JSON.parse(event.data);
+			if (data.progress) {
+				progress = data.progress;
+			}
 		});
 	};
 
@@ -37,7 +44,7 @@
 <h1>Welcome to SvelteKit</h1>
 <p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
 
-<!-- <progress class="progress" value={$progress} max="100">{$progress}%</progress> -->
+<progress class="progress" value={progress} max="100">{progress}%</progress>
 
 <button disabled={webSocketEstablished} on:click={() => establishWebSocket()}>
 	Establish WebSocket connection

@@ -17,7 +17,10 @@ def on_open(ws):
         while True:
             for i in range(100):
                 message = {
-                    "progress": i
+                    "user": "a85516c81c0b78d3e89d3f00099b8b15",
+                    "url": "https://undpgeohub.blob.core.windows.net/userdata/a85516c81c0b78d3e89d3f00099b8b15/raw/wasac-rwasom-2-data-revised_20230912143433.gpkg",
+                    "progress": i + 1,
+                    "stage": 'Ingesting'
                 }
                 ws.send(json.dumps(message))
                 time.sleep(1)
